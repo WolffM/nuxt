@@ -441,6 +441,9 @@ export interface ConfigSchema {
    *
    * If set to a single boolean, that value applies to both server and client. Additionally, the `'hidden'` option is also available for both server and client.
    * Available options for both client and server: - `true`: Generates sourcemaps and includes source references in the final bundle. - `false`: Does not generate any sourcemaps. - `'hidden'`: Generates sourcemaps but does not include references in the final bundle.
+   *
+   * By default, sourcemaps are only generated in development for both server and client bundles.
+   * Set to `true` or `{ server: true }` to enable server sourcemaps in production (useful for error tracking services such as Sentry).
    */
   sourcemap: boolean | { server?: boolean | 'hidden', client?: boolean | 'hidden' }
 

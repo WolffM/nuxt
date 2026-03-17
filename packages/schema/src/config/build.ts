@@ -29,7 +29,7 @@ export default defineResolvers({
         return { server: val, client: val }
       }
       return {
-        server: true,
+        server: await get('dev'),
         client: await get('dev'),
         ...typeof val === 'object' ? val : {},
       }

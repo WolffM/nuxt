@@ -152,6 +152,12 @@ export const bundle: NuxtBuilder['bundle'] = async (nuxt) => {
         },
         dedupe: [
           'vue',
+          'vue-router',
+          '@vue/reactivity',
+          '@vue/runtime-core',
+          '@vue/runtime-dom',
+          '@vue/shared',
+          'vue-demi',
         ],
       },
       // TODO: devSourcemap

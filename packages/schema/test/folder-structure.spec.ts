@@ -97,6 +97,32 @@ describe('nuxt folder structure', () => {
   })
 })
 
+describe('nuxt sourcemap defaults', () => {
+  it('should disable sourcemaps for both server and client by default in production', async () => {
+    const result = await applyDefaults(NuxtConfigSchema, { dev: false })
+    const options = result as unknown as NuxtOptions
+    expect(options.sourcemap).toEqual({ server: false, client: false })
+  })
+
+  it('should enable sourcemaps for both server and client by default in development', async () => {
+    const result = await applyDefaults(NuxtConfigSchema, { dev: true })
+    const options = result as unknown as NuxtOptions
+    expect(options.sourcemap).toEqual({ server: true, client: true })
+  })
+
+  it('should allow user to enable server sourcemaps in production', async () => {
+    const result = await applyDefaults(NuxtConfigSchema, { dev: false, sourcemap: { server: true } })
+    const options = result as unknown as NuxtOptions
+    expect(options.sourcemap).toEqual({ server: true, client: false })
+  })
+
+  it('should apply boolean sourcemap to both server and client', async () => {
+    const result = await applyDefaults(NuxtConfigSchema, { dev: false, sourcemap: true })
+    const options = result as unknown as NuxtOptions
+    expect(options.sourcemap).toEqual({ server: true, client: true })
+  })
+})
+
 function getDirs (options: NuxtOptions) {
   const stripRoot = (dir: string) => {
     return normalize(dir).replace(normalize(process.cwd()), '<cwd>')

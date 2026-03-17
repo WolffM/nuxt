@@ -443,7 +443,7 @@ export interface ConfigSchema {
    * Available options for both client and server: - `true`: Generates sourcemaps and includes source references in the final bundle. - `false`: Does not generate any sourcemaps. - `'hidden'`: Generates sourcemaps but does not include references in the final bundle.
    *
    * By default, sourcemaps are only generated in development for both server and client bundles.
-   * Set to `true` or `{ server: true }` to enable server sourcemaps in production (useful for error tracking services such as Sentry).
+   * Set to `true` to enable sourcemaps for both server and client in production, or use `{ server: true }` to opt in only for the server bundle (useful for error tracking services such as Sentry).
    */
   sourcemap: boolean | { server?: boolean | 'hidden', client?: boolean | 'hidden' }
 

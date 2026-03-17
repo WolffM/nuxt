@@ -28,9 +28,10 @@ export default defineResolvers({
       if (typeof val === 'boolean') {
         return { server: val, client: val }
       }
+      const dev = await get('dev')
       return {
-        server: await get('dev'),
-        client: await get('dev'),
+        server: dev,
+        client: dev,
         ...typeof val === 'object' ? val : {},
       }
     },

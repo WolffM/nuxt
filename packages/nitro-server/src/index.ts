@@ -337,7 +337,7 @@ export async function bundle (nuxt: Nuxt & { _nitro?: Nitro }): Promise<void> {
     logLevel: logLevelMapReverse[nuxt.options.logLevel],
   } satisfies NitroConfig)
 
-  if (nuxt.options.experimental.serverAppConfig === true && nitroConfig.imports) {
+  if ((nuxt.options.experimental as { serverAppConfig?: boolean }).serverAppConfig === true && nitroConfig.imports) {
     nitroConfig.imports.imports ||= []
     nitroConfig.imports.imports.push({
       name: 'useAppConfig',

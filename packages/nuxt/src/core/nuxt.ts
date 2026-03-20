@@ -8,7 +8,7 @@ import { createDebugger, createHooks } from 'hookable'
 import { getContext } from 'unctx'
 import ignore from 'ignore'
 import type { LoadNuxtOptions } from '@nuxt/kit'
-import { addBuildPlugin, addComponent, addPlugin, addPluginTemplate, addRouteMiddleware, addTypeTemplate, addVitePlugin, ensureDependencyInstalled, getLayerDirectories, getNuxtCtx, installModules, loadNuxtConfig, resolveFiles, resolveIgnorePatterns, resolveModuleWithOptions, runWithNuxtContext } from '@nuxt/kit'
+import { addBuildPlugin, addComponent, addPlugin, addPluginTemplate, addRouteMiddleware, addTypeTemplate, addVitePlugin, ensureDependencyInstalled, getLayerDirectories, installModules, loadNuxtConfig, resolveFiles, resolveIgnorePatterns, resolveModuleWithOptions, runWithNuxtContext } from '@nuxt/kit'
 import type { PackageJson } from 'pkg-types'
 import { readPackageJSON } from 'pkg-types'
 import { hash } from 'ohash'
@@ -55,6 +55,8 @@ import { AsyncContextInjectionPlugin } from './plugins/async-context.ts'
 import { PrehydrateTransformPlugin } from './plugins/prehydrate.ts'
 import { ExtractAsyncDataHandlersPlugin } from './plugins/extract-async-data-handlers.ts'
 import { VirtualFSPlugin } from './plugins/virtual.ts'
+
+const legacyNuxtCtx = getContext<Nuxt>('nuxt')
 
 export function createNuxt (options: NuxtOptions): Nuxt {
   const hooks = createHooks<NuxtHooks>()
@@ -135,7 +137,7 @@ export function createNuxt (options: NuxtOptions): Nuxt {
 
   // TODO: remove in nuxt v5
 
-  if (!getNuxtCtx()) {
+  if (!legacyNuxtCtx.tryUse()) {
     // backward compatibility with 3.x
 
     legacyNuxtCtx.set(nuxt)
@@ -150,7 +152,6 @@ export function createNuxt (options: NuxtOptions): Nuxt {
 }
 
 const fallbackCompatibilityDate = '2025-07-15' as DateString
-const legacyNuxtCtx = getContext<Nuxt>('nuxt')
 
 const nightlies = {
   'nitropack': 'nitropack-nightly',
